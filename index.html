@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8" />
+	<title>Pondération de notes</title>
+	<link rel="stylesheet" href="pond.css" />
+	<script src="Ponderation.js"></script>
+	<script src="App.js"></script>
+</head>
+<body>
+	<div class="interface">
+		<header>
+			<h1>Pondération de notes</h1>
+		</header>
+		<footer>&copy; Martin Boudreau</footer>
+
+		<div class="body">
+			<section class="colonne">
+				<form action="" border="1" name="ponderation" id="ponderation">
+					<table border="1">
+						<colgroup>
+							<col class="coches" />
+							<col class="labels" />
+							<col class="donnees" />
+							<col class="donnees" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th>Original</th>
+								<th>Pondéré</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input disabled="disabled" type="radio" name="type" id="typenotemin" /></td>
+								<th><label for="typenotemin">Note minimale : </label></th>
+								<td><input disabled="disabled" type="text" name="notemin0" value="0"/></td>
+								<td><input disabled="disabled" type="text" name="noteminf" value="0"/></td>
+							</tr>
+							<tr>
+								<td><input disabled="disabled" type="radio" name="type" id="typenotemax" /></td>
+								<th><label for="typenotemax">Note maximale : </label></th>
+								<td><input type="text" name="notemax0" value="100" /></td>
+								<td><input type="text" name="notemaxf" value="100" /></td>
+							</tr>
+							<tr>
+								<td><input type="radio" name="type" id="typenote" checked="checked" /></td>
+								<th><label for="typenote">Note : </label></th>
+								<td><input type="text" name="note0" value="60"/></td>
+								<td><input type="text" name="notef" value="60"/></td>
+							</tr>
+							<tr>
+								<td><input type="radio" name="type" id="typecoefficient" /></td>
+								<th><label for="typecoefficient">Coefficient : </label></th>
+								<td colspan="2"><input type="text" name="coefficient" value="1"/></td>
+							</tr>
+							<tr>
+								<td></td>
+								<th></th>
+								<td><textarea name="depart" cols="5" rows="20"></textarea></td>
+								<td><textarea readonly="readonly" name="arrivee" cols="20" rows="20"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</section>
+			<section class="contenu">
+				<div id="graphique"><svg height="200" width="200" viewBox="0 0 400 400">
+<rect class="zone" id="zonef" x="0" y="160" height="240" width="400"></rect>
+<rect class="zone" id="zone0" x="0" y="0" height="400" width="240"></rect>
+<rect id="cadre" x=".5" y=".5" height="399" width="399"></rect>
+<path id="chemin" d="M 1,299 L 399,1" />
+</svg>
+</div>
+			</section>
+		</div>
+	</div>
+</body>
+</html>
+
+<!--
+Pour pondérer une note
+p=note pondéré (valeur cherchée)
+m=note maximum (habituellement 100)
+c=coefficient de pondération
+n=Note à pondérer
+------------------
+p = Math.pow(n/m, 1/c) * m
+
+======================
+Pour trouver un coefficient
+
+Math.log(n/m)/Math.log(p/m)
+ou
+(Math.log(n) - Math.log(m)) / (Math.log(p) / Math.log(m))
+-->
