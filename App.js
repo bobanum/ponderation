@@ -56,7 +56,11 @@ class App {
 		this.NS = "http://www.w3.org/2000/svg";
 		window.addEventListener("load", function () {
 			var ponderation = new Ponderation();
-			document.getElementById("graphique").appendChild(ponderation.svg());
+			var graphique = document.getElementById("graphique");
+			var svg = ponderation.svg();
+			svg.setAttribute("id", "graphique");
+			graphique.parentNode.replaceChild(svg, graphique);
+//			document.getElementById("graphique").appendChild(ponderation.svg());
 		});
 	}
 }

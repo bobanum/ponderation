@@ -3,83 +3,58 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Pondération de notes</title>
-	<link rel="stylesheet" href="pond.css" />
+	<link rel="stylesheet" href="ponderation.css" />
 	<script src="Ponderation.js"></script>
 	<script src="App.js"></script>
 </head>
+
 <body>
-	<div class="interface">
+	<div id="app" class="interface">
 		<header>
+			<img src="images/logo_ponderation.svg" alt=""/>
 			<h1>Pondération de notes</h1>
 		</header>
 		<footer>&copy; Martin Boudreau</footer>
 
-		<div class="body">
-			<section class="colonne">
-				<form action="" border="1" name="ponderation" id="ponderation">
-					<table border="1">
-						<colgroup>
-							<col class="coches" />
-							<col class="labels" />
-							<col class="donnees" />
-							<col class="donnees" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th></th>
-								<th></th>
-								<th>Original</th>
-								<th>Pondéré</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><input disabled="disabled" type="radio" name="type" id="typenotemin" /></td>
-								<th><label for="typenotemin">Note minimale : </label></th>
-								<td><input disabled="disabled" type="text" name="notemin0" value="0"/></td>
-								<td><input disabled="disabled" type="text" name="noteminf" value="0"/></td>
-							</tr>
-							<tr>
-								<td><input disabled="disabled" type="radio" name="type" id="typenotemax" /></td>
-								<th><label for="typenotemax">Note maximale : </label></th>
-								<td><input type="text" name="notemax0" value="100" /></td>
-								<td><input type="text" name="notemaxf" value="100" /></td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="type" id="typenote" checked="checked" /></td>
-								<th><label for="typenote">Note : </label></th>
-								<td><input type="text" name="note0" value="60"/></td>
-								<td><input type="text" name="notef" value="60"/></td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="type" id="typecoefficient" /></td>
-								<th><label for="typecoefficient">Coefficient : </label></th>
-								<td colspan="2"><input type="text" name="coefficient" value="1"/></td>
-							</tr>
-							<tr>
-								<td></td>
-								<th></th>
-								<td><textarea name="depart" cols="5" rows="20"></textarea></td>
-								<td><textarea readonly="readonly" name="arrivee" cols="20" rows="20"></textarea></td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</section>
-			<section class="contenu">
-				<div id="graphique"><svg height="200" width="200" viewBox="0 0 400 400">
-<rect class="zone" id="zonef" x="0" y="160" height="240" width="400"></rect>
-<rect class="zone" id="zone0" x="0" y="0" height="400" width="240"></rect>
-<rect id="cadre" x=".5" y=".5" height="399" width="399"></rect>
-<path id="chemin" d="M 1,299 L 399,1" />
-</svg>
-</div>
-			</section>
+		<form action="" border="1" name="controles" id="controles">
+			<span></span>
+			<span></span>
+			<span class="etiquette colonne original">Original</span>
+			<span class="etiquette colonne pondere">Pondéré</span>
+			<span class="coche"><input class="coche" disabled="disabled" type="radio" name="type" id="typenotemin" /></span>
+			<label for="typenotemin">Note minimale : </label>
+			<input class="original" disabled="disabled" type="text" name="notemin0" value="0" />
+			<input class="pondere" disabled="disabled" type="text" name="noteminf" value="0" />
+			<span class="coche"><input disabled="disabled" type="radio" name="type" id="typenotemax" /></span>
+			<label for="typenotemax">Note maximale : </label>
+			<input class="original" type="text" name="notemax0" value="100" />
+			<input class="pondere" type="text" name="notemaxf" value="100" />
+			<span class="coche"><input type="radio" name="type" id="typenote" checked="checked" /></span>
+			<label for="typenote">Note : </label>
+			<input class="original" type="text" name="note0" value="60" />
+			<input class="pondere" type="text" name="notef" value="60" />
+			<span class="coche"><input type="radio" name="type" id="typecoefficient" /></span>
+			<label for="typecoefficient">Coefficient : </label>
+			<input class="original pondere" type="text" name="coefficient" value="1" />
+			<span class="coche"><input type="radio" name="type" id="typemoderation" /></span>
+			<label for="typemoderation">Modération : </label>
+			<span class="original pondere"><input type="range" value=".5" min="0" max="1" step=".05" name="moderation" /></span>
+			<span class="coche"></span>
+			<label class="label" for="depart">Groupe</label>
+			<textarea class="original" name="depart" id="depart" cols="5" rows="10"></textarea>
+			<textarea class="pondere" readonly="readonly" name="arrivee" id="arrivee" cols="20" rows="10"></textarea>
+		</form>
+		<div id="graphique">
+<!--
+			<svg xmlns="http://www.w3.org/2000/svg" height="200" width="200" viewBox="0 0 400 400">
+				<rect class="zone" id="zonef" x="0" y="160" height="240" width="400"></rect>
+				<rect class="zone" id="zone0" x="0" y="0" height="400" width="240"></rect>
+				<rect id="cadre" x=".5" y=".5" height="399" width="399"></rect>
+				<path id="chemin" d="M 1,299 L 399,1" />
+			</svg>
+-->
 		</div>
 	</div>
-</body>
-</html>
-
 <!--
 Pour pondérer une note
 p=note pondéré (valeur cherchée)
@@ -96,3 +71,6 @@ Math.log(n/m)/Math.log(p/m)
 ou
 (Math.log(n) - Math.log(m)) / (Math.log(p) / Math.log(m))
 -->
+</body>
+</html>
+

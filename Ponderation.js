@@ -8,9 +8,9 @@ class Ponderation {
 	svg() {
 		var resultat, rect;
 		resultat = App.createSVG("svg", {
-			"width": "400",
-			"height": "400",
-			//			"preserveAspectRatio": "none",
+			"width": "100%",
+			"height": "100%",
+//			"preserveAspectRatio": "none",
 			"viewBox": "-100 -2 1103 1023"
 		});
 		rect = App.createSVG("rect", {
@@ -45,7 +45,7 @@ class Ponderation {
 			"parentNode": resultat
 		});
 		rect = ["M"];
-		let div = 1000;
+		let div = 100;
 		let coef = 2;
 		for (let i = 0; i <= div; i += 1) {
 			rect.push("" + (i * this.largeur / div) + "," + (this.hauteur - this.hauteur * (Math.pow(i / div, 1 / coef))) + "");
