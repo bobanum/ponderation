@@ -1,18 +1,77 @@
 /*jslint browser:true, esnext:true, forin:true*/
 /*global App*/
-class Ponderation {
+export default class Ponderation {
 	constructor() {
 		this.largeur = 1000;
 		this.hauteur = 1000;
+		this._min0 = 0;
+		this._minf = 0;
+		this._max0 = 100;
+		this._maxf = 100;
+		this._ref0 = 60;
+		this._reff = 60;
+		this._coefficient = 1;
+		this._moderation = 1;
+	}
+	get min0() {
+		return this._min0;
+	}
+	set min0(val) {
+		this._min0 = val;
+	}
+	get minf() {
+		return this._minf;
+	}
+	set minf(val) {
+		this._minf = val;
+	}
+	get max0() {
+		return this._max0;
+	}
+	set max0(val) {
+		this._max0 = val;
+	}
+	get maxf() {
+		return this._maxf;
+	}
+	set maxf(val) {
+		this._maxf = val;
+	}
+	get ref0() {
+		return this._ref0;
+	}
+	set ref0(val) {
+		this._ref0 = val;
+	}
+	get reff() {
+		return this._reff;
+	}
+	set reff(val) {
+		this._reff = val;
+	}
+	get coefficient() {
+		return this._coefficient;
+	}
+	set coefficient(val) {
+		this._coefficient = val;
+	}
+	get moderation() {
+		return this._moderation;
+	}
+	set moderation(val) {
+		this._moderation = val;
+	}
+	get courbe() {
+		var resultat = [];
+
+		for (let i = this.min0; i <= this.max0; i += 1) {
+			resultat.push(4 * i);
+			resultat.push(400 - 4 * this.note(i));
+		}
+		return resultat;
 	}
 	svg() {
 		var resultat, rect;
-		resultat = App.createSVG("svg", {
-			"width": "100%",
-			"height": "100%",
-//			"preserveAspectRatio": "none",
-			"viewBox": "-100 -2 1103 1023"
-		});
 		rect = App.createSVG("rect", {
 			"id": "zonef",
 			"class": "zone",
@@ -145,21 +204,21 @@ class Ponderation {
 		return donnee;
 	}
 	static validerDonnees() {
-		var notemax0, notemaxf, notemin0, noteminf, note0, notef, coefficient;
+		var notemax0, notemin0, note0;
 		notemax0 = this.validerUneDonnee('notemax0', 100);
-		notemaxf = this.validerUneDonnee('notemaxf', notemax0);
+		this.validerUneDonnee('notemaxf', notemax0);
 		notemin0 = this.validerUneDonnee('notemin0', 0);
-		noteminf = this.validerUneDonnee('noteminf', notemin0);
+		this.validerUneDonnee('noteminf', notemin0);
 		note0 = this.validerUneDonnee('note0', 60);
-		notef = this.validerUneDonnee('notef', note0);
-		coefficient = this.validerUneDonnee('coefficient', 1);
+		this.validerUneDonnee('notef', note0);
+		this.validerUneDonnee('coefficient', 1);
 		notemax0 = this.validerUneDonnee('notemax0', 100);
-		notemaxf = this.validerUneDonnee('notemaxf', notemax0);
+		this.validerUneDonnee('notemaxf', notemax0);
 		notemin0 = this.validerUneDonnee('notemin0', 0);
-		noteminf = this.validerUneDonnee('noteminf', notemin0);
+		this.validerUneDonnee('noteminf', notemin0);
 		note0 = this.validerUneDonnee('note0', 60);
-		notef = this.validerUneDonnee('notef', note0);
-		coefficient = this.validerUneDonnee('coefficient', 1);
+		this.validerUneDonnee('notef', note0);
+		this.validerUneDonnee('coefficient', 1);
 	}
 	static ajusterCoefficient() {
 		var ponderation, notef, coefficient;
@@ -218,11 +277,18 @@ class Ponderation {
 		}
 		ponderation.arrivee.value = donnees;
 	}
+	note(originale) {
+		var max = this.max || 100;
+		var coefficient = this.coefficient;
+
+		var quad = Math.pow(originale / max, 1 / coefficient) * max;
+		return this.moderation * quad + (1 - this.moderation) * originale;
+	}
 	static calcNote(note, coeff, max) {
-		var ponderation, ratio;
+		var ponderation;
 		ponderation = window.ponderation;
-		ratio = ponderation.ratio ||  1;
-		max = ponderation.max ||  100;
+		//ratio = ponderation.ratio || 1;
+		max = ponderation.max || 100;
 		return Math.pow(note / max, 1 / coeff) * max;
 	}
 	static calcNotes(note, coeff) {
@@ -250,8 +316,6 @@ class Ponderation {
 		return this;
 	}
 	static setEvt() {
-		var targetObj;
-		targetObj = this;
 		this.evt = {
 			ponderation: {
 				input: function (e) {
