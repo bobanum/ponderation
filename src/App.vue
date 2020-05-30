@@ -26,32 +26,6 @@ ou
 -->
 </template>
 
-<script>
-import Controles from './components/Controles.vue';
-import Graphique from './components/Graphique.vue';
-import Ponderation from './js/Ponderation.js';
-
-export default {
-	name: 'app',
-	data() {
-		return {
-			ponderation: null,
-		}
-	},
-	components: {
-		Controles,
-		Graphique,
-	},
-	mounted() {
-		this.ponderation = new Ponderation();
-		// var graphique = document.getElementById("graphique");
-		// var svg = ponderation.svg();
-		// svg.setAttribute("id", "graphique");
-		// graphique.parentNode.replaceChild(svg, graphique);
-	}
-}
-</script>
-
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
 html {
@@ -66,7 +40,7 @@ body {
 #app {
     --bgcol: hsl(0, 20%, 87%);
     --bgcol: hsl(266, 30%, 93%);
-	min-height: 100%;
+	height: 100%;
 	display: grid;
 	grid-template-columns: auto 1fr;
 	grid-template-rows: auto 1fr auto;
@@ -97,8 +71,38 @@ body {
 		grid-column: 1 / 3;
 		padding: .5em;
 	}
-	& > .body {
-
-	}
 }
 </style>
+
+<script>
+import Controles from './components/Controles.vue';
+import Graphique from './components/Graphique.vue';
+import Ponderation from './js/Ponderation.js';
+
+export default {
+	name: 'app',
+	data() {
+		// console.log("data");
+		return {
+			ponderation: new Ponderation(),
+		}
+	},
+	components: {
+		Controles,
+		Graphique,
+	},
+	mounted() {
+		this.ponderation.minf = 30;
+		this.ponderation.ref0 = 50;
+		this.ponderation.reff = 70;
+		// console.log("mounted");
+		// this.ponderation = new Ponderation();
+		// var graphique = document.getElementById("graphique");
+		// var svg = ponderation.svg();
+		// svg.setAttribute("id", "graphique");
+		// graphique.parentNode.replaceChild(svg, graphique);
+	},
+	methods: {
+	},
+}
+</script>

@@ -4,50 +4,54 @@ export default class Ponderation {
 	constructor() {
 		this.largeur = 1000;
 		this.hauteur = 1000;
-		this._min0 = 0;
-		this._minf = 0;
-		this._max0 = 100;
-		this._maxf = 100;
-		this._ref0 = 60;
-		this._reff = 60;
+		this.original = {
+			min: 0,
+			max: 100,
+			ref: 60,
+		};
+		this.pondere = {
+			min: 0,
+			max: 100,
+			ref: 60,
+		};
 		this._coefficient = 1;
 		this._moderation = 1;
 	}
 	get min0() {
-		return this._min0;
+		return this.original.min;
 	}
 	set min0(val) {
-		this._min0 = val;
-	}
-	get minf() {
-		return this._minf;
-	}
-	set minf(val) {
-		this._minf = val;
+		this.original.min = val;
 	}
 	get max0() {
-		return this._max0;
+		return this.original.max;
 	}
 	set max0(val) {
-		this._max0 = val;
-	}
-	get maxf() {
-		return this._maxf;
-	}
-	set maxf(val) {
-		this._maxf = val;
+		this.original.max = val;
 	}
 	get ref0() {
-		return this._ref0;
+		return this.original.ref;
 	}
 	set ref0(val) {
-		this._ref0 = val;
+		this.original.ref = val;
+	}
+	get minf() {
+		return this.pondere.min;
+	}
+	set minf(val) {
+		this.pondere.min = val;
+	}
+	get maxf() {
+		return this.pondere.max;
+	}
+	set maxf(val) {
+		this.pondere.max = val;
 	}
 	get reff() {
-		return this._reff;
+		return this.pondere.ref;
 	}
 	set reff(val) {
-		this._reff = val;
+		this.pondere.ref = val;
 	}
 	get coefficient() {
 		return this._coefficient;
